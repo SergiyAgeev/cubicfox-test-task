@@ -26,7 +26,7 @@ public class Rate {
     private byte rate;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "rates",
-            joinColumns = @JoinColumn(name = "user_id")
-            , inverseJoinColumns = @JoinColumn(name = "product_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     List<Product> productList;
 }

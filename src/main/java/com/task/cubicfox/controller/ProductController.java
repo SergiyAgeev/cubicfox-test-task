@@ -1,26 +1,29 @@
 package com.task.cubicfox.controller;
 
 import com.task.cubicfox.entity.Product;
-import com.task.cubicfox.repository.ProductRepository;
+import com.task.cubicfox.service.ProductService;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private ProductRepository productRepository;
-
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Autowired
+    private ProductService productService;
 
     @GetMapping
-    public Collection<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Collection<Product> getAllProducts(@RequestParam("page") Integer page,
+                                              @RequestParam("limit") Integer limit) {
+        Pageable pageRequest = PageRequest.of(page, limit);
+        return productService.findAll();
     }
 
 }

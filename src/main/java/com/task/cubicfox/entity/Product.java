@@ -1,15 +1,10 @@
 package com.task.cubicfox.entity;
 
-import com.sun.istack.NotNull;
-
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,16 +15,14 @@ import lombok.Data;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
-    @Column(length = 6)
+    @Column(unique = true, length = 6)
     private Byte code;
-    @NotNull
+    @Column(nullable = false)
     private String name;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
-    @NotNull
+    @Column(nullable = false)
     private Double price;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> userList;
-
 }

@@ -19,11 +19,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    // products?page=value&limit=value
     @GetMapping
-    public Collection<Product> getAllProducts(@RequestParam("page") Integer page,
-                                              @RequestParam("limit") Integer limit) {
+    public Collection<Product> getAllProducts(@RequestParam(value = "page",
+            required = false,
+            defaultValue = "0") Integer page,
+                                              @RequestParam(value = "limit",
+                                                      required = false,
+                                                      defaultValue = "20") Integer limit) {
         Pageable pageRequest = PageRequest.of(page, limit);
-        return productService.findAll();
+        return productService.findAll(pageRequest);
     }
 
 }

@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
-    void add(Product product);
+    void save(Product product);
 
     List<Product> findAll(Pageable pageable);
+
+    Product getById(Long id);
 }

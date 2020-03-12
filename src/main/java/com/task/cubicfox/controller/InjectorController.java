@@ -23,8 +23,10 @@ public class InjectorController {
     @Autowired
     private ProductService productService;
 
+    Object[] stringSet = codeGenerator().toArray();
+
     @GetMapping
-    public void test() {
+    public String injectData() {
         User user = new User();
         user.setName("Serhii");
         user.setEmail("sergiyageev@gmail.com");
@@ -41,12 +43,13 @@ public class InjectorController {
 
         for (int i = 0; i < 1000; i++) {
             Product product = new Product();
-            product.setCode(String.valueOf(codeGenerator().toArray()[i]));
+            product.setCode(String.valueOf(stringSet[i]));
             product.setName("ProductName" + i);
             product.setDescription("Big description" + i);
             product.setPrice(i + 0.1);
-            productService.add(product);
+            productService.save(product);
         }
+        return "Success! Data injected.";
     }
 
     private Set<String> codeGenerator() {

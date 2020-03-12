@@ -12,16 +12,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServicceImpl implements ProductService {
-    @Autowired
+    final
     ProductRepository productRepository;
 
+    public ProductServicceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     @Override
-    public void add(Product product) {
+    public void save(Product product) {
         productRepository.save(product);
     }
 
     @Override
     public List<Product> findAll(Pageable pageable) {
         return productRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return productRepository.getOne(id);
     }
 }

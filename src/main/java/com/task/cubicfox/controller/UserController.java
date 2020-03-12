@@ -1,10 +1,11 @@
 package com.task.cubicfox.controller;
 
 import com.task.cubicfox.entity.User;
-import com.task.cubicfox.repository.UserRepository;
+import com.task.cubicfox.service.UserService;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,30 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private final UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return userRepository.getOne(id);
-    }
-
-    @GetMapping
-    @RequestMapping("/injectuser")
-    public void test() {
-        User user = new User();
-        user.setName("Vasia");
-        user.setEmail("123");
-        userRepository.save(user);
-
+        return userService.getUserById(id);
     }
 
 }

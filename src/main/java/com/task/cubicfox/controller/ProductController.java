@@ -30,5 +30,4 @@ public class ProductController {
         Pageable pageRequest = PageRequest.of(page, limit);
         return productService.findAll(pageRequest);
     }
-
 }

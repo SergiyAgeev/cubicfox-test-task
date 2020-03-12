@@ -16,6 +16,11 @@ public class ProductServicceImpl implements ProductService {
     ProductRepository productRepository;
 
     @Override
+    public void add(Product product) {
+        productRepository.save(product);
+    }
+
+    @Override
     public List<Product> findAll(Pageable pageable) {
         return productRepository.findAll(pageable).getContent();
     }

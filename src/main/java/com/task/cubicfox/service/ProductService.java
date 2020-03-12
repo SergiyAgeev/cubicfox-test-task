@@ -7,5 +7,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
-    public List<Product> findAll(Pageable pageable);
+    void add(Product product);
+
+    List<Product> findAll(Pageable pageable);
 }

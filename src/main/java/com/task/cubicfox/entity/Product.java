@@ -18,7 +18,7 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
     @Column(unique = true, length = 6)
-    private Byte code;
+    private String code;
     @Column(nullable = false)
     private String name;
     @Column(columnDefinition = "TEXT", nullable = false)

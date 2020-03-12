@@ -6,6 +6,7 @@ import com.task.cubicfox.service.ProductService;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getById(Long id) {
         return productRepository.getOne(id);
+    }
+
+    @Override
+    public void update(Long id, Product product) {
+//        Product productRepositoryOne = productRepository.getOne(id);
+//        productRepositoryOne.setPrice(product.getPrice());
+//        productRepositoryOne.setName(product.getName());
+//        productRepositoryOne.setCode(product.getCode());
+//        productRepositoryOne.setPrice(product.getPrice());
+        productRepository.updateById(product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                id);
+    }
+
+    @Override
+    public Page<Product> getByCode(String code, Pageable pageable) {
+        return productRepository.getByCode(code, pageable);
     }
 }

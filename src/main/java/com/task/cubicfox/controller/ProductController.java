@@ -4,9 +4,9 @@ import com.task.cubicfox.entity.Product;
 import com.task.cubicfox.entity.dto.response.ProductResponseDto;
 import com.task.cubicfox.service.ProductService;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +24,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // products?page=value&limit=value
+    // products?page=~START_PAGE~&limit=~COUNT_VALUES_IN_EACH_PAGE~
     @GetMapping
-    public List<ProductResponseDto> getAllProducts(@RequestParam(value = "page",
-            required = false,
-            defaultValue = "0") Integer page,
-                                                   @RequestParam(value = "limit",
-                                                           required = false,
-                                                           defaultValue = "20") Integer limit) {
-        Pageable pageRequest = PageRequest.of(page, limit);
-        return productService.findAll(pageRequest).stream()
-                .map(this::getProductResponseDto)
-                .collect(Collectors.toList());
+    public Page<Product> getAllProducts(@RequestParam(required = false) Optional<String> code,
+                                        @RequestParam(required = false) Optional<Integer> page,
+                                        @RequestParam(required = false) Optional<Integer> size) {
+        Pageable pageRequest = PageRequest.of(page.orElse(0), size.orElse(50));
+        return productService.getByCode(code.orElse(""), pageRequest);
     }
 
     @GetMapping

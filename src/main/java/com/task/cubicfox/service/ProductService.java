@@ -15,7 +15,7 @@ public interface ProductService {
 
     Product getById(Long id);
 
-    void update(Long id, Product product);
+    void update(Long id, ProductResponseDto productResponseDto);
 
     Page<Product> getByCode(String code, Pageable pageable);
 }

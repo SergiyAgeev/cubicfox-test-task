@@ -59,7 +59,7 @@ public class ProductController {
     @RequestMapping("/{productID}")
     public String updateProductById(@RequestBody Product product,
                                     @PathVariable Long productID) {
-        productService.update(productID, product);
+        productService.update(productID, getProductResponseDto(product));
         return "product with id = " + productID + " updated!";
     }
 

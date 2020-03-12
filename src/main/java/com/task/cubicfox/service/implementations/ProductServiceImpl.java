@@ -1,6 +1,7 @@
 package com.task.cubicfox.service.implementations;
 
 import com.task.cubicfox.entity.Product;
+import com.task.cubicfox.entity.dto.response.ProductResponseDto;
 import com.task.cubicfox.repository.ProductRepository;
 import com.task.cubicfox.service.ProductService;
 
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(Long id, Product product) {
+    public void update(Long id, ProductResponseDto product) {
         productRepository.updateById(product.getName(),
                 product.getDescription(),
                 product.getPrice(),

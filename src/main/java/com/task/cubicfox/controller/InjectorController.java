@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/inject")
 public class InjectorController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ProductService productService;
+    private final UserService userService;
+    private final ProductService productService;
 
     Object[] stringSet = codeGenerator().toArray();
+
+    public InjectorController(UserService userService, ProductService productService) {
+        this.userService = userService;
+        this.productService = productService;
+    }
 
     @GetMapping
     public String injectData() {

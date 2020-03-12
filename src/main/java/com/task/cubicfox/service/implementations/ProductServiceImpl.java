@@ -6,16 +6,14 @@ import com.task.cubicfox.service.ProductService;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductServicceImpl implements ProductService {
-    final
-    ProductRepository productRepository;
+public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
 
-    public ProductServicceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

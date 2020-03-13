@@ -1,5 +1,7 @@
 package com.task.cubicfox.entity.dto.response;
 
+import com.task.cubicfox.entity.Status;
+
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
@@ -16,4 +18,6 @@ public class ProductResponseDto {
     private String description;
     @NotEmpty
     private Double price;
+    @NotEmpty
+    private Status status;
 }

@@ -69,6 +69,7 @@ public class ProductController {
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
+        productDto.setStatus(product.getStatus());
         return productDto;
     }
 }

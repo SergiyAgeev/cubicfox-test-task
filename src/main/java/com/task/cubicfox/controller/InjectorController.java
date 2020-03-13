@@ -1,6 +1,7 @@
 package com.task.cubicfox.controller;
 
 import com.task.cubicfox.entity.Product;
+import com.task.cubicfox.entity.Status;
 import com.task.cubicfox.entity.User;
 import com.task.cubicfox.service.ProductService;
 import com.task.cubicfox.service.UserService;
@@ -33,6 +34,7 @@ public class InjectorController {
         user.setName("Serhii");
         user.setEmail("sergiyageev@gmail.com");
         user.setPassword("1234");
+        user.setStatus(Status.ACTIVE);
         userService.save(user);
 
         IntStream.range(0, 200).forEach(i -> {
@@ -40,6 +42,7 @@ public class InjectorController {
             user1.setName("userName" + i);
             user1.setEmail("email" + i + "@mail.com");
             user1.setPassword(i + "" + i + 1);
+            user1.setStatus(Status.ACTIVE);
             userService.save(user1);
         });
 
@@ -49,6 +52,7 @@ public class InjectorController {
             product.setName("ProductName" + i);
             product.setDescription("Big description" + i);
             product.setPrice(i + 0.1);
+            product.setStatus(Status.ACTIVE);
             productService.save(product);
         }
         return "Success! Data injected.";

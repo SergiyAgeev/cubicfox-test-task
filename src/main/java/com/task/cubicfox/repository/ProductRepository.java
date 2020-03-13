@@ -1,6 +1,7 @@
 package com.task.cubicfox.repository;
 
 import com.task.cubicfox.entity.Product;
+import com.task.cubicfox.entity.Status;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Product p SET p.name= ?1, p.description =?2, p.price = ?3 WHERE p.id = ?4")
-    void updateById(String name, String description, Double prise, Long id);
+    @Query(value = "UPDATE Product p SET p.name= ?1, p.description =?2, p.price = ?3, p.status = ?4 WHERE p.id = ?5")
+    void updateById(String name, String description, Double prise, Status status, Long id);
 }

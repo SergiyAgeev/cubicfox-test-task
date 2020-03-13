@@ -39,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.updateById(product.getName(),
                 product.getDescription(),
                 product.getPrice(),
+                product.getStatus(),
                 id);
     }
 

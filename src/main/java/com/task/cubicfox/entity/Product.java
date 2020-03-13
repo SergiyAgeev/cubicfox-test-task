@@ -2,9 +2,6 @@ package com.task.cubicfox.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -12,11 +9,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long id;
+public class Product extends BaseEntity {
     @Column(unique = true, length = 6)
     private String code;
     @Column(nullable = false)

@@ -17,11 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "rates")
-public class Rate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rate_id")
-    private Long id;
+public class Rate extends BaseEntity{
     @Column(length = 2)
     private byte rate;
     @ManyToMany(cascade = CascadeType.ALL)

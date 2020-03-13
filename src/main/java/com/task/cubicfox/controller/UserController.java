@@ -1,10 +1,12 @@
 package com.task.cubicfox.controller;
 
 import com.task.cubicfox.entity.User;
+import com.task.cubicfox.service.RoleService;
 import com.task.cubicfox.service.UserService;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -29,6 +29,7 @@ public class ProductController {
     }
 
     // products?page=~START_PAGE~&limit=~COUNT_VALUES_IN_EACH_PAGE~
+    // to filter by code use: /products?code=~YOUR_SEARCHING_CODE~
     @GetMapping
     public List<ProductResponseDto> getAllProducts(@RequestParam(required = false)
                                                            Optional<String> code,
@@ -52,9 +53,11 @@ public class ProductController {
             "code": "000000",
             "name": "00000000000",
             "description": "000000000",
+            "status": "NOT_ACTIVE',
             "price": 0.11
         }
-    * */
+    status can be only: ACTIVE, NOT_ACTIVE, DELETED
+    */
     @PutMapping
     @RequestMapping("/{productID}")
     public String updateProductById(@RequestBody Product product,
@@ -70,6 +73,7 @@ public class ProductController {
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setStatus(product.getStatus());
+        productDto.setCreateDate(product.getCreateDate());
         return productDto;
     }
 }

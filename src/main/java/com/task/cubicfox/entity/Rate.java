@@ -17,12 +17,15 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "rates")
-public class Rate extends BaseEntity{
+public class Rate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(length = 2)
     private byte rate;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "rates",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     List<Product> productList;
 }

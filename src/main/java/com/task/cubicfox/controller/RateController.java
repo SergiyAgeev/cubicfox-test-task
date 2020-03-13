@@ -6,7 +6,6 @@ import com.task.cubicfox.service.UserService;
 
 import java.security.Principal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/rate")
 public class RateController {
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private RateService rateService;
+    private final ProductService productService;
+    private final UserService userService;
+    private final RateService rateService;
+
+    public RateController(ProductService productService, UserService userService, RateService rateService) {
+        this.productService = productService;
+        this.userService = userService;
+        this.rateService = rateService;
+    }
 
     @PostMapping
     @RequestMapping("/{productID}")

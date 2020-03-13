@@ -2,6 +2,7 @@ package com.task.cubicfox.entity.dto.response;
 
 import com.task.cubicfox.entity.Status;
 
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
@@ -20,4 +21,6 @@ public class ProductResponseDto {
     private Double price;
     @NotEmpty
     private Status status;
+    @NotEmpty
+    private LocalDateTime createDate;
 }

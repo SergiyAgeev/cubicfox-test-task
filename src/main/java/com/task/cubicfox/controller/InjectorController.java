@@ -48,6 +48,7 @@ public class InjectorController {
 
     @GetMapping
     public String injectData() {
+
         User user = new User();
         user.setName("Serhii");
         user.setEmail("sergiyageev@gmail.com");

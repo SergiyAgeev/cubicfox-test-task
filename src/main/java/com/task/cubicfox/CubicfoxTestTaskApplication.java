@@ -16,4 +16,7 @@ public class CubicfoxTestTaskApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
+

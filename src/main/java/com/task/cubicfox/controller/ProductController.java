@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,8 +46,15 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/{productID}", method = RequestMethod.GET)
-    public ProductResponseDto getProductById(@PathVariable Long productID) {
-        return getProductResponseDto(productService.getById(productID));
+    public ResponseEntity<Product> getProductById(@PathVariable(name = "productID") Long productID) {
+
+        Product product = productService.getById(productID);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        ProductResponseDto result = getProductResponseDto(product);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     /*For update, in method body use format like:
@@ -72,8 +81,6 @@ public class ProductController {
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
-        productDto.setStatus(product.getStatus());
-        productDto.setCreateDate(product.getCreateDate());
         return productDto;
     }
 }

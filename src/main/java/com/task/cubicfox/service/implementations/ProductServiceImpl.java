@@ -5,6 +5,7 @@ import com.task.cubicfox.entity.dto.response.ProductResponseDto;
 import com.task.cubicfox.repository.ProductRepository;
 import com.task.cubicfox.service.ProductService;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product) {
+        product.setCreateDate(new Date());
         productRepository.save(product);
     }
 

@@ -11,12 +11,5 @@ public class CubicfoxTestTaskApplication {
     public static void main(String[] args) {
         SpringApplication.run(CubicfoxTestTaskApplication.class, args);
     }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
 }
 

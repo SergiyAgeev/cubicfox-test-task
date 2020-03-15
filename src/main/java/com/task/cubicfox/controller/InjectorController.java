@@ -44,10 +44,6 @@ public class InjectorController {
         adminRole.setName("ADMIN");
         roleService.add(userRole);
         roleService.add(adminRole);
-    }
-
-    @GetMapping
-    public String injectData() {
 
         User user = new User();
         user.setName("Serhii");
@@ -55,8 +51,11 @@ public class InjectorController {
         user.setPassword("1234");
         user.addRole(roleService.getRole("ADMIN"));
         userService.save(user);
+    }
 
-        IntStream.range(0, 200).forEach(i -> {
+    @GetMapping
+    public String injectData() {
+        IntStream.range(0, 20).forEach(i -> {
             User user1 = new User();
             user1.setName("userName" + i);
             user1.setEmail("email" + i + "@mail.com");
@@ -64,7 +63,7 @@ public class InjectorController {
             userService.save(user1);
         });
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             Product product = new Product();
             product.setCode(String.valueOf(stringSet[i]));
             product.setName("ProductName" + i);

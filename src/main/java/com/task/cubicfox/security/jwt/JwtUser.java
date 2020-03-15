@@ -2,28 +2,28 @@ package com.task.cubicfox.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class JwtUser implements UserDetails {
 
-    final private Long id;
-    final private String name;
-    final private String email;
-    final private String password;
-    final private Boolean enable;
-    final private LocalDateTime created;
-    final private Collection<? extends GrantedAuthority> authorities;
+    private final Long id;
+    private final String name;
+    private final String email;
+    private final String password;
+    private final Boolean enable;
+    private final Date created;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(Long id,
                    String name,
                    String email,
                    String password,
                    Boolean enable,
-                   LocalDateTime created,
+                   Date created,
                    Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
@@ -43,12 +43,8 @@ public class JwtUser implements UserDetails {
         return name;
     }
 
-    public Boolean getEnable() {
-        return enable;
-    }
-
     @JsonIgnore
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return created;
     }
 

@@ -1,6 +1,6 @@
 package com.task.cubicfox.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,5 +27,5 @@ public abstract class BaseEntity {
     @CreatedDate
     @DateTimeFormat
     @Column(name = "created")
-    private LocalDateTime createDate = LocalDateTime.now();
+    private Date createDate;
 }

@@ -30,6 +30,7 @@ public class JwtTokenProvider {
 
     @Value("${jwt.token.secret}")
     private String secret;
+
     @Value("${jwt.token.expired}")
     private Long validityInMilliseconds;
 
@@ -48,6 +49,7 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String username, List<Role> roles) {
+
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
 
@@ -57,7 +59,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(validity)//
+                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -73,7 +75,7 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Architect_")) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
@@ -86,7 +88,6 @@ public class JwtTokenProvider {
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
-
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid");

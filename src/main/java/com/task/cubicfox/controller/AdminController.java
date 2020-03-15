@@ -10,25 +10,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin/")
+public class AdminController {
+
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
+    @PostMapping
     public List<User> getAllUsers() {
         return userService.getAll();
     }
 
-    @GetMapping
-    @RequestMapping("/{id}")
+    @GetMapping(value = "user/{id}")
     public ResponseEntity<UserRequestDto> getUserById(@PathVariable(name = "id") Long id) {
         User user = userService.getUserById(id);
 
@@ -39,5 +40,4 @@ public class UserController {
         UserRequestDto result = UserRequestDto.fromUser(user);
         return new ResponseEntity(result, HttpStatus.OK);
     }
-
 }

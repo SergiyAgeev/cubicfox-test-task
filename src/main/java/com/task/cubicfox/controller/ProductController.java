@@ -1,13 +1,13 @@
 package com.task.cubicfox.controller;
 
 import com.task.cubicfox.entity.Product;
+import com.task.cubicfox.entity.dto.request.ProductRequestDto;
 import com.task.cubicfox.entity.dto.response.ProductResponseDto;
 import com.task.cubicfox.service.ProductService;
-
+import com.task.cubicfox.service.RateService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,62 +25,57 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products")
 public class ProductController {
     private final ProductService productService;
+    private final RateService rateService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, RateService rateService) {
         this.productService = productService;
+        this.rateService = rateService;
     }
 
-    // products?page=~START_PAGE~&limit=~COUNT_VALUES_IN_EACH_PAGE~
-    // to filter by code use: /products?code=~YOUR_SEARCHING_CODE~
     @GetMapping
-    public List<ProductResponseDto> getAllProducts(@RequestParam(required = false)
-                                                           Optional<String> code,
-                                                   @RequestParam(required = false)
-                                                           Optional<Integer> page,
-                                                   @RequestParam
-                                                           Optional<Integer> size) {
-        Pageable pageRequest = PageRequest.of(page.orElse(0), size.orElse(50));
+    public List<ProductRequestDto> getAllProducts(@RequestParam(required = false)
+                                                          Optional<String> code,
+                                                  @RequestParam(required = false)
+                                                          Optional<Integer> page,
+                                                  @RequestParam
+                                                          Optional<Integer> size) {
+        Pageable pageRequest = PageRequest.of(page.orElse(0), size.orElse(20));
         return productService.getByCode(code.orElse(""), pageRequest).stream()
-                .map(this::getProductResponseDto)
+                .map(this::getProductRequestDto)
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/{productID}", method = RequestMethod.GET)
-    public ResponseEntity<Product> getProductById(@PathVariable(name = "productID") Long productID) {
+    public ResponseEntity<ProductResponseDto> getProductById(
+            @PathVariable(name = "productID") Long productID) {
 
-        Product product = productService.getById(productID);
+        Product product = productService.getSingleProduct(productID);
+        ProductResponseDto productResponseDto = getProductResponseDto(product);
+        productResponseDto.setRate(rateService.getRateByProductId(product.getId()) == null
+                ? Double.valueOf(0.0) : rateService.getRateByProductId(product.getId()));
+
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        ProductResponseDto result = getProductResponseDto(product);
-        return new ResponseEntity(result, HttpStatus.OK);
+        return new ResponseEntity(productResponseDto, HttpStatus.OK);
     }
 
-    /*For update, in method body use format like:
-    * {
-            "code": "000000",
-            "name": "00000000000",
-            "description": "000000000",
-            "status": "NOT_ACTIVE',
-            "price": 0.11
-        }
-    status can be only: ACTIVE, NOT_ACTIVE, DELETED
-    */
     @PutMapping
     @RequestMapping("/{productID}")
-    public String updateProductById(@RequestBody Product product,
-                                    @PathVariable Long productID) {
-        productService.update(productID, getProductResponseDto(product));
-        return "product with id = " + productID + " updated!";
+    public ResponseEntity<String> updateProductById(@RequestBody Product product,
+                                                    @PathVariable Long productID) {
+        productService.update(productID, product);
+        return new ResponseEntity<>("product with id = " + productID + " updated!",
+                HttpStatus.OK);
     }
 
     private ProductResponseDto getProductResponseDto(Product product) {
-        ProductResponseDto productDto = new ProductResponseDto();
-        productDto.setCode(product.getCode());
-        productDto.setName(product.getName());
-        productDto.setDescription(product.getDescription());
-        productDto.setPrice(product.getPrice());
+        ProductResponseDto productDto = ProductResponseDto.fromProduct(product);
+        return productDto;
+    }
+
+    private ProductRequestDto getProductRequestDto(Product product) {
+        ProductRequestDto productDto = ProductRequestDto.fromProduct(product);
         return productDto;
     }
 }

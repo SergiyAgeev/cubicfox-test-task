@@ -4,7 +4,6 @@ import com.task.cubicfox.entity.User;
 import com.task.cubicfox.security.jwt.JwtUser;
 import com.task.cubicfox.security.jwt.JwtUserFactory;
 import com.task.cubicfox.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,14 +20,15 @@ public class JwtUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
         User user = userService.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException("User with email: " + email + " not found");
+            throw new UsernameNotFoundException("User with email: " + email + " not found.");
         }
 
         JwtUser jwtUser = JwtUserFactory.create(user);
-        log.info("loadUserByUsername - user with email = " + email + " successfully loaded");
+        log.info("loadUserByUsername - user with email = " + email + " successfully loaded.");
         return jwtUser;
     }
 }

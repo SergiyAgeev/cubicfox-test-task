@@ -1,20 +1,18 @@
 package com.task.cubicfox.entity;
 
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import lombok.Data;
 
 @Data
+
 @Entity
 @Table(name = "rates")
 public class Rate {
@@ -22,18 +20,11 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 2)
-    private byte rate;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "rates",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
-    List<Product> productList;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "rates",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
-    List<User> usersList;
-
-
+    @Min(value = 0)
+    @Max(value = 10)
+    private Integer rate;
+    @OneToOne
+    Product product;
+    @OneToOne
+    User user;
 }

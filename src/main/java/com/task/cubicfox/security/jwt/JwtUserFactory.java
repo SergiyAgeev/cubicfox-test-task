@@ -3,15 +3,14 @@ package com.task.cubicfox.security.jwt;
 import com.task.cubicfox.entity.Role;
 import com.task.cubicfox.entity.Status;
 import com.task.cubicfox.entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public final class JwtUserFactory {
+    private static final String ROLE_PREFIX = "ROLE_";
 
     public JwtUserFactory() {
 
@@ -31,7 +30,7 @@ public final class JwtUserFactory {
 
     private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {
         return userRoles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.getName()))
                 .collect(Collectors.toList());
     }
 }

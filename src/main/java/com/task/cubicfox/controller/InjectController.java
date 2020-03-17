@@ -7,13 +7,13 @@ import com.task.cubicfox.entity.User;
 import com.task.cubicfox.service.ProductService;
 import com.task.cubicfox.service.RoleService;
 import com.task.cubicfox.service.UserService;
-
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/inject")
-public class InjectorController {
+public class InjectController {
     private final UserService userService;
     private final ProductService productService;
     private final RoleService roleService;
@@ -29,7 +29,10 @@ public class InjectorController {
 
     Object[] stringSet = codeGenerator().toArray();
 
-    public InjectorController(UserService userService, ProductService productService, RoleService roleService, BCryptPasswordEncoder passwordEncoder) {
+    public InjectController(UserService userService,
+                            ProductService productService,
+                            RoleService roleService,
+                            BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.productService = productService;
         this.roleService = roleService;
@@ -54,12 +57,12 @@ public class InjectorController {
     }
 
     @GetMapping
-    public String injectData() {
+    public ResponseEntity<String> injectData() {
         IntStream.range(0, 20).forEach(i -> {
             User user1 = new User();
             user1.setName("userName" + i);
             user1.setEmail("email" + i + "@mail.com");
-            user1.setPassword(i + "" + i + 1);
+            user1.setPassword("1234");
             userService.save(user1);
         });
 
@@ -72,23 +75,19 @@ public class InjectorController {
             product.setStatus(Status.ACTIVE);
             productService.save(product);
         }
-        return "Success! Data injected.";
+        return ResponseEntity.ok("Success! Data injected!");
     }
 
     private Set<String> codeGenerator() {
         Set<String> strings = new HashSet<>();
-        while (strings.size() != 1000) {
-            for (int i = 0; i < 1000; i++) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int j = 0; j < 6; j++) {
-                    int randomNumberCounter = new Random()
-                            .ints(0, 10)
-                            .findFirst()
-                            .getAsInt();
-                    stringBuilder.append(randomNumberCounter);
-                }
-                strings.add(stringBuilder.toString());
-            }
+        while (strings.size() != 500) {
+            IntStream.range(0, 500).mapToObj(i -> IntStream.range(0, 6).map(j -> new Random()
+                    .ints(0, 10)
+                    .findFirst()
+                    .getAsInt())
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.joining()))
+                    .forEach(strings::add);
         }
         return strings;
     }

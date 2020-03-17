@@ -3,9 +3,10 @@ package com.task.cubicfox.service.implementations;
 import com.task.cubicfox.entity.Role;
 import com.task.cubicfox.repository.RoleRepository;
 import com.task.cubicfox.service.RoleService;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
@@ -16,11 +17,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role add(Role role) {
-        return roleRepository.save(role);
+        Role save = roleRepository.save(role);
+        log.info("role = " + role.getName() + " was successfully added.");
+        return save;
     }
 
     @Override
-    public Role getRole(String role) {
-        return roleRepository.findByName(role);
+    public Role getRole(String role)  {
+        Role byName = roleRepository.findByName(role);
+        log.info("get role with name = " + role + " was successfully get.");
+        return byName;
     }
 }

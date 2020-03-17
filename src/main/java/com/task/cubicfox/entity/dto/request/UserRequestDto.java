@@ -2,7 +2,6 @@ package com.task.cubicfox.entity.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.task.cubicfox.entity.User;
-
 import lombok.Data;
 
 @Data

@@ -9,16 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import lombok.Data;
 
 @Data
+
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
     @Column(unique = true, nullable = false, length = 50)
     private String name;
-    @Column(nullable = false, length = 50)
+    @Column(unique = true, nullable = false, length = 50)
     private String email;
     @Column(nullable = false)
     private String password;

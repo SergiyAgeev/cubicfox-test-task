@@ -1,5 +1,10 @@
 package com.task.cubicfox.service;
 
+import com.task.cubicfox.entity.Rate;
+
 public interface RateService {
-    void save(Long userId, Long productId, Integer rate);
+
+    void save(Rate rate);
+
+    Double getRateByProductId(Long productId);
 }

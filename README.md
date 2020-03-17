@@ -1,8 +1,9 @@
-### CUBICFOX-TEST-TASK
+## CUBICFOX-TEST-TASK
 ![](https://jirasupport.files.wordpress.com/2019/09/api-rest-1.png?w=579)
 
 ![](https://img.shields.io/github/languages/top/SergiyAgeev/internetmarket)
 ![](https://img.shields.io/github/languages/code-size/SergiyAgeev/internetmarket)
+![](https://travis-ci.com/SergiyAgeev/cubicfox-test-task.svg?branch=master)
 # Table of Contents
 [Project purpose](#purpose)
 
@@ -61,7 +62,7 @@ Available functions for **ALL** users:
 input **/inject** in address bar to add some data into the database :
 
 ##### user with roles = ADMIN, USER
->-use this in method **POST** body (raw) with **/authenticate** request
+>- use this in method **POST** body (raw) with **/authenticate** request
 
         {
          "username":"sergiyageev@gmail.com", 

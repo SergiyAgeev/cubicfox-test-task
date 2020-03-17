@@ -75,21 +75,21 @@ use this **JWT** as value in **Header** with key **Authorization** of every requ
 use **Bearer_** prefix before **JWT** 
 <hr>
 
-####Pagination
+#### Pagination
 **default** pagination values is: **start** from page = 0, **limit** values on page = 20
 
      /products?page=YOUR_VALUE&limit=YOUR_LIMIT_VALUE
 you can make changes with your own values
 <hr>
 
-####Filter
+#### Filter
  you can filter products by product code
  
      /products?code=YOUR_SEARCHING_CODE
  input full code or part of code to find products
  <hr> 
  
-####Update  
+#### Update  
 For update product, in method body use format like(example):
 
         {
